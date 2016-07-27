@@ -31,15 +31,23 @@ app.get('/new/:url(*)', function (req, res) {
 	  	//original URL, then the shortened URL.
 	  	//Send the object.
 	  	var newURL = function (db, callback){
-	  		if (validURL.isUri(params)) {
-	  			var shortURL = faker.random.word() + faker.random.word();
-				var reqURL = { url: params, short: shortURL};
-		  		collection.insert([reqURL]);
-		  		res.json({original_url: params, short_url: appHome + shortURL });
-	  		}else {
-	  			//If the URL is not valid, send error.
-	  			res.send('This URL is not valid, please try a properly formatted URL to continue.')
-	  		}
+	  		//Check to see if a shortlink for the requested URL already exists.
+	  		//If it does, show it. Else, create one.
+	  		collection.fineOne({"url":params }, {short: 1, _id: 0}, function (err, doc) {
+	  			if (doc != null) {
+	  				res.json({original_url: params, short_url: appHome + doc.short});
+	  			} else {
+	  				if (validURL.isUri(params)) {
+			  			var shortURL = faker.random.word() + faker.random.word();
+						var reqURL = { url: params, short: shortURL};
+				  		collection.insert([reqURL]);
+				  		res.json({original_url: params, short_url: appHome + shortURL });
+			  		}else {
+			  			//If the URL is not valid, send error.
+			  			res.send('This URL is not valid, please try a properly formatted URL to continue.')
+			  		}
+	  			}
+	  		});
 	  	}
 	  	//Close database.
 	  	newURL(db, function (){
