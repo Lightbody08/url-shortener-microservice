@@ -73,8 +73,9 @@ app.get('/:shortened', function (req, res) {
 		  		});
 		  	}
 
+		  	//Close database.
 		  	aquireURL(db, function () {
-
+		  		db.close();
 		  	});
 		 
 		}
