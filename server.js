@@ -33,7 +33,7 @@ app.get('/new/:url(*)', function (req, res) {
 	  	var newURL = function (db, callback){
 	  		//Check to see if a shortlink for the requested URL already exists.
 	  		//If it does, show it. Else, create one.
-	  		collection.fineOne({"url":params }, {short: 1, _id: 0}, function (err, doc) {
+	  		collection.findOne({"url": params}, {short: 1, _id: 0}, function (err, doc) {
 	  			if (doc != null) {
 	  				res.json({original_url: params, short_url: appHome + doc.short});
 	  			} else {
