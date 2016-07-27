@@ -7,7 +7,7 @@ var url = process.env.MONGOLAB_URI;
 
 //Get Homepage of app.
 app.get('/', function (req, res) {
-	res.send('Add /new/http://google.com then add the shortened URL to the end.');
+	res.sendFile('index.html', {root:__dirname});
 });
 
 //Get the page that displays original URL and shortened URL.
