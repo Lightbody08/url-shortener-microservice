@@ -7,7 +7,7 @@ var url = process.env.MONGOLAB_URI;
 
 //Get Homepage of app.
 app.get('/', function (req, res) {
-	res.send('test test 1 2 3 1 2 3');
+	res.send('Add /new/http://google.com then add the shortened URL to the end.');
 });
 
 //Get the page that displays original URL and shortened URL.
@@ -24,6 +24,7 @@ app.get('/new/:url(*)', function (req, res) {
 	    //Create a variable that contains the requested URL.
 	    var collection = db.collection('links');
 	  	var params = req.params.url;
+	  	var appHome = req.get('host') + "/";
 
 	  	//Function that will  check if the URL is a valid URL.
 	  	//If so, create an object for that URL with its
@@ -34,7 +35,7 @@ app.get('/new/:url(*)', function (req, res) {
 	  			var shortURL = faker.random.word() + faker.random.word();
 				var reqURL = { url: params, short: shortURL};
 		  		collection.insert([reqURL]);
-		  		res.json({original_url: params, short_url: 'localhost/new/'+shortURL });
+		  		res.json({original_url: params, short_url: appHome + shortURL });
 	  		}else {
 	  			//If the URL is not valid, send error.
 	  			res.send('This URL is not valid, please try a properly formatted URL to continue.')
