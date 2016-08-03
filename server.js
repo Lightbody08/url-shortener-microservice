@@ -18,14 +18,14 @@ app.get('/new/:url(*)', function (req, res) {
 	    console.log("Unable to connect to server: ", err);
 	  } else {
 	  	//Show that we are connected to the mLab server.
-	    console.log("Connected to server!")
+	   	console.log("Connected to server!")
 
-	    //Create a variable that accesses database.
-	    //Create a variable that contains the requested URL.
-	    var collection = db.collection('links');
-	  	var params = req.params.url;
+	    	//Create a variable that accesses database.
+	    	//Create a variable that contains the requested URL.
+	    	var collection = db.collection('links');
+		var params = req.params.url;
 	  	var appHome = req.get('host') + "/";
-
+	
 	  	//Function that will  check if the URL is a valid URL.
 	  	//If so, create an object for that URL with its
 	  	//original URL, then the shortened URL.
